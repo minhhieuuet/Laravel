@@ -39,4 +39,16 @@
 	});
 	Route::get('controller','MyController@Chao');
 	Route::get('Thamso/{ten}','MyController@KhoaHoc');
+	///URL
+
+	Route::get('MyRequest','MyController@GetURL');
+	//Nhan gui du lieu
+
+	Route::get('getForm',function(){
+		return view('postForm');
+	});
+	Route::post('postForm',['as'=>'postForm','uses'=>'MyController@postForm']);
+	//Cookie
+	Route::get('setCookie','Mycontroller@setCookie');
+	Route::get('setCookie','Mycontroller@getCookie');
  ?>
