@@ -51,4 +51,11 @@
 	//Cookie
 	Route::get('setCookie','Mycontroller@setCookie');
 	Route::get('setCookie','Mycontroller@getCookie');
+	//upfile
+	Route::get('upFile',function (){
+		return view('postFile');
+	});
+	Route::post('postFile',['as'=>'postFile','uses'=>'MyController@postFile']);
+	//Jason
+	Route::get('getJson','MyController@getJson');
  ?>

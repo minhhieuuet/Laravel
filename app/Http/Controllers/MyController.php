@@ -19,6 +19,7 @@ class MyController extends Controller
     {
     	return $request->url();
     }
+    //Dang nhap
     public function postForm(Request $request)
     {
     	echo $request->username;
@@ -36,4 +37,30 @@ class MyController extends Controller
     }
 
     //upload file
+    public function postFile(Request $request)
+    {
+        if($request->hasFile('myFile'))
+        {
+            echo "Xac nhan file thanh cong";
+            $file=$request->file('myFile');
+            $filetype=$file->getClientOriginalExtension('myFile');
+            if($filetype=="jpg")
+            {
+                echo "Day la file anh";
+            }
+            $filename=$file->getClientOriginalName('myFile');
+            $file->move('img',$filename);
+        }
+        else
+        {
+            echo "Chua co file";
+        }
+    }
+
+    //Json xuat du lieu
+    public function getJson()
+    {
+        $array=['mot'=>'hai'];
+        return response()->json($array);
+    }
 }
