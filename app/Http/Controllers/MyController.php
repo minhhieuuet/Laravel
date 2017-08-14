@@ -63,4 +63,14 @@ class MyController extends Controller
         $array=['mot'=>'hai'];
         return response()->json($array);
     }
+    //Lam viec voi view
+    public function myView()
+    {
+        return view('myView');
+    }
+    //Truyen du lieu tren view
+    public function ten($ten)
+    {
+        return view('myView',['ten'=>$ten]);
+    }
 }

@@ -58,4 +58,15 @@
 	Route::post('postFile',['as'=>'postFile','uses'=>'MyController@postFile']);
 	//Jason
 	Route::get('getJson','MyController@getJson');
+	//Lam viec voi view
+	Route::get('myView','MyController@myView');
+	//Truyen du lieu sang view
+	Route::get('View/{ten}','MyController@ten');
+	//Dùng chung view
+	View::share('ten','Do Minh Hieu');
+	//Blade template
+	Route::get('blade',function(){
+		$ten="<h1>do minh hieu<h1>";
+		return view('layouts.laravel',['ten'=>$ten]);
+	});
  ?>
