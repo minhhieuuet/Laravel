@@ -69,4 +69,114 @@
 		$ten="<h1>do minh hieu<h1>";
 		return view('layouts.laravel',['ten'=>$ten]);
 	});
+	//Database 
+	//Tạo bảng
+	Route::get('database',function(){
+		Schema::create('loaisanpham',function($table){
+			$table->increments('id');
+			$table->string('tensanpham',125);
+		});
+		echo "Tao bang thanh cong";
+	});
+	//----------------
+	//Liên kết bảng
+	Route::get('lienketbang',function(){
+		Schema::create('sanpham',function($table){
+			$table->increments('id');
+			$table->string('ten');
+			$table->float('gia');
+			$table->integer('soluong')->default(0);
+			$table->integer('id_loaisanpham')->unsigned();
+			$table->foreign('id_loaisanpham')->reference('id')->on('loaisanpham');
+		});
+	});
+	//Xóa bảng
+	//Dùng drop nếu không có bảng sẽ báo lỗi
+	Route::get('xoabang',function(){
+		Schema::drop('sanpham');
+	});
+	//Dùng dropIfExists kiểm tra xem có bảng không rồi mới xóa
+	Route::get('xoabang1',function()
+	{
+		Schema::dropIfExists('sanpham');
+	});
+	//Lay du lieu database
+	Route::get('database',function(){
+
+		$data=DB::table('users')->get();
+		foreach ($data as $row) {
+			# code...
+			foreach ($row as $key => $value) {
+				# code...
+				echo $key.":".$value."<br>";
+			}
+			echo "<hr>";
+		}
+	});
+	//Loc trong database co id = 2
+	Route::get('databasewhere',function(){
+
+		$data=DB::table('users')->where('id','=',2)->get();
+		foreach ($data as $row) {
+			# code...
+			foreach ($row as $key => $value) {
+				# code...
+				echo $key.":".$value."<br>";
+			}
+			echo "<hr>";
+		}
+	});
+	//Select id,name,email ....
+	Route::get('databaseselect',function(){
+
+		$data=DB::table('users')->select('id','name','email')->where('id',2)->get();
+		foreach ($data as $row) {
+			# code...
+			foreach ($row as $key => $value) {
+				# code...
+				echo $key.":".$value."<br>";
+			}
+			echo "<hr>";
+		}
+	});
+	//Nhung lenh truy van database, orderby
+	Route::get('database/truyvan',function(){
+
+		$data=DB::table('users')->select(DB::raw('id,name as hoten,email'))->orderby('id','asc')->get();
+		foreach ($data as $row) {
+			# code...
+			foreach ($row as $key => $value) {
+				# code...
+				echo $key.":".$value."<br>";
+			}
+			echo "<hr>";
+		}
+	});
+	//Cap nhat database UPDATE
+	Route::get('database/update',function(){
+
+		$data=DB::table('users')->where('id',1)->update(['name'=>'Minh','email'=>'hiha@gmail.com'])->get();
+		foreach ($data as $row) {
+			# code...
+			foreach ($row as $key => $value) {
+				# code...
+				echo $key.":".$value."<br>";
+			}
+			echo "<hr>";
+		}
+	});
+	//Su dung model
+	Route::get('model',function(){
+		$user=new App\User(); 					//
+		$user->name="Nga";						//Khai báo
+		$user->email="nga@gmail.com";			//
+		$user->password="mothaiba";				//
+		$user->save();  				//Để lưu
+
+	});
+	//Tim kiem (id=4)
+	Route::get('model/timkiem',function(){
+		$user=App\User::find(4);
+		echo $user->name;
+	});
  ?>

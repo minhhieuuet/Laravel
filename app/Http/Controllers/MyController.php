@@ -73,4 +73,5 @@ class MyController extends Controller
     {
         return view('myView',['ten'=>$ten]);
     }
+    
 }
