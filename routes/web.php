@@ -179,4 +179,45 @@
 		$user=App\User::find(4);
 		echo $user->name;
 	});
+	///Thu dung model sanpham
+	Route::get('model/sanpham',function(){
+		$sanpham=new App\sanpham();
+		$sanpham->tensanpham="Mot";
+		$sanpham->save();
+	});
+	//Tao cot
+	Route::get('taocot',function(){
+		Schema::table('loaitin',function($table){
+			$table->integer('id_loaisanpham');
+		});
+	});
+	//Middleware
+	Route::get('ten',function(){
+		echo "Do Minh Hieu";
+	})->middleware('MyMiddleware')->name('ten');
+	Route::get('thoat',function(){
+		echo "Ban khong co ten";
+	})->name('thoat');
+	Route::get('nhapten',function(){
+		return view('nhapten');
+	})->name('nhapten');
+	//Auth quản lí đăng nhập
+	Route::get('dangnhap',function()
+		{
+			return view('dangnhap');
+		});
+	Route::post('login','MyController@login')->name('login');
+	//Lam viec voi session
+	Route::group(['middleware'=>['web']],function(){
+		Route::get('session',function(){
+			//Session::put('KhoaHoc','Laravel');
+			echo "Khong co loi";
+			echo "<br>";
+			echo Session::get('KhoaHoc');
+			if(Session::has('KhoaHoc'))
+				echo "Co session";
+			else
+				echo "Khong co session";
+		});
+	});
  ?>

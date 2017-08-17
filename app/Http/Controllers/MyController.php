@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
-
+use Auth;
+use Hash;
 use Illuminate\Http\Request;
 
 class MyController extends Controller
@@ -73,5 +74,14 @@ class MyController extends Controller
     {
         return view('myView',['ten'=>$ten]);
     }
-    
+    //Auth
+    public function login(Request $request)
+    {
+        $username = $request['username'];
+        $password = $request['password'];
+        if(Auth::attempt(['name'=>$username,'password'=> bcrypt($password)]))
+           echo "Thanh cong";
+        else
+            echo "That bai";    
+    }
 }
